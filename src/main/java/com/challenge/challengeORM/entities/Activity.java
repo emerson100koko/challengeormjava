@@ -2,7 +2,8 @@ package com.challenge.challengeORM.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_activity")
@@ -15,9 +16,11 @@ public class Activity {
     private String descricao;
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Category categoria;
+    @ManyToMany
+    @JoinTable(name = "tb_activity_participant",
+        joinColumns = @JoinColumn(name = "activity_id"),
+        inverseJoinColumns = @JoinColumn(name = "participant_id"))
+    private Set<Participant> participantes = new HashSet<>();
 
     public Activity(){
     }
@@ -61,17 +64,7 @@ public class Activity {
         this.price = price;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Activity activity = (Activity) o;
-        return Objects.equals(id, activity.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public Set<Participant> getParticipantes() {
+        return participantes;
     }
 }

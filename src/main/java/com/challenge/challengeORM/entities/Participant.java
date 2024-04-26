@@ -2,6 +2,9 @@ package com.challenge.challengeORM.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "tb_participant")
 public class Participant {
@@ -12,9 +15,9 @@ public class Participant {
     private String name;
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "atividade_id")
-    private Activity atividade;
+
+    @ManyToMany(mappedBy = "participantes")
+    private Set<Activity> atividades = new HashSet<>();
 
     public Participant(){
     }
@@ -24,7 +27,6 @@ public class Participant {
         this.name = name;
         this.email = email;
     }
-
 
     public Long getId() {
         return id;
@@ -49,4 +51,10 @@ public class Participant {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Set<Activity> getAtividades() {
+        return atividades;
+    }
 }
+
+

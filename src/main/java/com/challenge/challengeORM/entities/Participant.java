@@ -11,37 +11,29 @@ public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
+    @Column(unique = true)
     private String email;
 
+    @ManyToMany(mappedBy = "participants")
+    private Set<Activity> activities = new HashSet<>();
 
-    @ManyToMany(mappedBy = "participantes")
-    private Set<Activity> atividades = new HashSet<>();
-
-    public Participant(){
+    public Participant() {
     }
 
-    public Participant(Long id, String name, String email) {
+    public Participant(Integer id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {
@@ -52,9 +44,15 @@ public class Participant {
         this.name = name;
     }
 
-    public Set<Activity> getAtividades() {
-        return atividades;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Activity> getActivities() {
+        return activities;
     }
 }
-
-

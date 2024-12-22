@@ -10,48 +10,46 @@ public class Block {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Integer id;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant inicio;
-
+    private Instant starting;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant fim;
+    private Instant ending;
 
     @ManyToOne
-    @JoinColumn(name = "atividade_id")
-    private Activity atividade;
+    @JoinColumn(name = "activity_id")
+    private Activity activity;
 
-    public Block(){
+    public Block() {
     }
 
-    public Block(Long id, Instant inicio, Instant fim) {
+    public Block(Integer id, Instant starting, Instant ending) {
         this.id = id;
-        this.inicio = inicio;
-        this.fim = fim;
+        this.starting = starting;
+        this.ending = ending;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Instant getInicio() {
-        return inicio;
+    public Instant getStart() {
+        return starting;
     }
 
-    public void setInicio(Instant inicio) {
-        this.inicio = inicio;
+    public void setStart(Instant starting) {
+        this.starting = starting;
     }
 
-    public Instant getFim() {
-        return fim;
+    public Instant getEnd() {
+        return ending;
     }
 
-    public void setFim(Instant fim) {
-        this.fim = fim;
+    public void setEnd(Instant ending) {
+        this.ending = ending;
     }
 }

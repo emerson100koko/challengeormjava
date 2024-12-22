@@ -2,7 +2,9 @@ package com.challenge.challengeORM.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,41 +13,41 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
-    private String descricao;
-    private Double price;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    private Double Price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToMany(mappedBy = "activity")
+    private List<Block> blocks = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tb_activity_participant",
-        joinColumns = @JoinColumn(name = "activity_id"),
-        inverseJoinColumns = @JoinColumn(name = "participant_id"))
-    private Set<Participant> participantes = new HashSet<>();
+            joinColumns = @JoinColumn(name = "activity_id"),
+            inverseJoinColumns = @JoinColumn(name = "participant_id"))
+    private Set<Participant> participants = new HashSet<>();
 
-    public Activity(){
+    public Activity() {
     }
 
-    public Activity(Long id, String name, String descricao, Double price) {
+    public Activity(Integer id, String name, String description, Double price) {
         this.id = id;
         this.name = name;
-        this.descricao = descricao;
-        this.price = price;
+        this.description = description;
+        Price = price;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getName() {
@@ -56,15 +58,25 @@ public class Activity {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Double getPrice() {
-        return price;
+        return Price;
     }
 
     public void setPrice(Double price) {
-        this.price = price;
+        Price = price;
     }
 
-    public Set<Participant> getParticipantes() {
-        return participantes;
+    public List<Block> getBlocks() {
+        return blocks;
     }
+
+
 }
